@@ -44,12 +44,17 @@ Als geregistreerde gebruiker wil ik kunnen inloggen, zodat ik toegang krijg tot 
 
 - Sessie wordt veilig beheerd
 
-#### Profielbeheer
-Als speler wil ik mijn profielgegevens kunnen bekijken en aanpassen, zodat deze up-to-date blijven.
+#### Profiel Bekijken
+Als speler wil ik mijn profielgegevens kunnen bekijken, zodat ik mijn huidige informatie kan controleren.
 
 **Acceptatiecriteria:**
 
 - Gebruiker kan eigen profielgegevens inzien
+
+#### Profiel Aanpassen
+Als speler wil ik mijn profielgegevens kunnen aanpassen, zodat deze up-to-date blijven.
+
+**Acceptatiecriteria:**
 
 - Gebruiker kan email aanpassen
 
@@ -114,8 +119,8 @@ Als speler wil ik handelsverzoeken kunnen versturen, zodat ik items kan ruilen m
 
 - Ontvangen bevestiging van verzending
 
-#### Handelsverzoek Behandelen
-Als speler wil ik ontvangen handelsverzoeken kunnen accepteren of weigeren, zodat ik controle heb over mijn trades.
+#### Handelsverzoek Accepteren
+Als speler wil ik ontvangen handelsverzoeken kunnen accepteren, zodat ik gewenste items kan verkrijgen.
 
 **Acceptatiecriteria:**
 
@@ -123,11 +128,24 @@ Als speler wil ik ontvangen handelsverzoeken kunnen accepteren of weigeren, zoda
 
 - Details van aangeboden items inzichtelijk
 
-- Mogelijkheid tot accepteren/weigeren
+- Mogelijkheid tot accepteren
 
 - Bevestiging van keuze
 
 - Automatische inventaris update na succesvolle handel
+
+#### Handelsverzoek Weigeren
+Als speler wil ik ontvangen handelsverzoeken kunnen weigeren, zodat ik ongewenste trades kan voorkomen.
+
+**Acceptatiecriteria:**
+
+- Tonen van ontvangen handelsverzoeken
+
+- Details van aangeboden items inzichtelijk
+
+- Mogelijkheid tot weigeren
+
+- Bevestiging van keuze
 
 #### Handelsnotificaties
 Als speler wil ik notificaties ontvangen over handelsgerelateerde activiteiten, zodat ik op de hoogte blijf.
@@ -149,20 +167,39 @@ Als beheerder wil ik gebruikers kunnen aanmaken, zodat ik nieuwe accounts kan cr
 
 - Toewijzen van rollen
 
-#### Itembeheer (Admin)
-Als beheerder wil ik items kunnen beheren, zodat ik de game-economie kan controleren.
+#### Item Aanmaken (Admin)
+Als beheerder wil ik nieuwe items kunnen aanmaken, zodat ik de itemcatalogus kan uitbreiden.
 
 **Acceptatiecriteria:**
 
-- Aanmaken nieuwe items
+- Invoeren van itemnaam, beschrijving, type en zeldzaamheid
 
-- Bewerken bestaande items
+- Instellen van basisstatistieken
 
-- Verwijderen items
+#### Item Bewerken (Admin)
+Als beheerder wil ik bestaande items kunnen bewerken, zodat ik balanswijzigingen kan doorvoeren.
+
+**Acceptatiecriteria:**
+
+- Wijzigen van iteminformatie
+
+- Aanpassen van statistieken
+
+#### Item Verwijderen (Admin)
+Als beheerder wil ik items kunnen verwijderen, zodat ik problematische items uit het spel kan halen.
+
+**Acceptatiecriteria:**
+
+- Selecteren van te verwijderen item
+
+- Bevestiging voor verwijdering
+
+#### Itemstatistieken Instellen (Admin)
+Als beheerder wil ik itemstatistieken kunnen instellen, zodat ik de gameplay kan balanceren.
+
+**Acceptatiecriteria:**
 
 - Statistieken instellen (0-100)
-
-- Toewijzen items aan spelers
 
 #### Item Toewijzing (Admin)
 Als beheerder wil ik items kunnen toewijzen aan spelers voor bug compensatie of community rewards.
@@ -175,11 +212,16 @@ Als beheerder wil ik items kunnen toewijzen aan spelers voor bug compensatie of 
 
 - Toevoegen item aan spelerinventaris
 
-#### Economie Monitoring (Admin)
-Als beheerder wil ik kunnen zien hoeveel spelers een bepaald type item bezitten, zodat ik de economie in balans kan houden.
+#### Economie Overzicht Bekijken (Admin)
+Als beheerder wil ik kunnen zien hoeveel spelers een bepaald type item bezitten, zodat ik de economie kan monitoren.
 
 **Acceptatiecriteria:**
 
 - Overzicht van aantal spelers per itemtype
+
+#### Economie Filteren (Admin)
+Als beheerder wil ik de economie-informatie kunnen filteren, zodat ik specifieke aspecten van de game-economie kan analyseren.
+
+**Acceptatiecriteria:**
 
 - Filteropties voor verschillende itemtypes
