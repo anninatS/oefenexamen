@@ -9,6 +9,7 @@ use App\Models\Inventory;
 use App\Models\TradeRequest;
 use App\Models\TradeItem;
 use App\Models\Notification;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,11 +18,13 @@ class DatabaseSeeder extends Seeder
         $admin = User::factory()->admin()->create([
             'name' => 'stan',
             'email' => 'stan@stan.stan',
+            'password' => Hash::make('stan'),
         ]);
 
         $testUser = User::factory()->create([
             'name' => 'user',
             'email' => 'user@user.user',
+            'password' => Hash::make('user'),
         ]);
 
         $users = User::factory()->count(10)->create();
