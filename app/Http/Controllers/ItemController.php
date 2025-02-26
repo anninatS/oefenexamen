@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 
 class ItemController extends Controller
@@ -60,8 +61,23 @@ class ItemController extends Controller
      */
     public function show(Item $item): View
     {
+        $cacheKey = 'global_max_durability';
+
+        if (!Cache::has($cacheKey)) {
+            $maxDurability = Item::select('durability')
+                ->distinct()
+                ->max('durability');
+            $maxDurability = max($maxDurability, 100);
+            Cache::put($cacheKey, $maxDurability, now()->addMinutes(15));
+        }
+
+        $maxDurability = Cache::get($cacheKey);
+        $durabilityPercentage = ($item->durability / $maxDurability) * 100;
+
         return view('items.show', [
             'item' => $item,
+            'durabilityPercentage' => $durabilityPercentage,
+            'maxDurability' => $maxDurability,
         ]);
     }
 }
