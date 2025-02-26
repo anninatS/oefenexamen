@@ -61,7 +61,7 @@ Als speler wil ik mijn profielgegevens kunnen aanpassen, zodat deze up-to-date b
 ### Epic: Itemcatalogus
 
 #### Items Bekijken
-Als speler wil ik door de itemcatalogus kunnen bladeren, zodat ik items kan ontdekken. 👎
+Als speler wil ik door de itemcatalogus kunnen bladeren, zodat ik items kan ontdekken. 👍
 
 **Acceptatiecriteria:**
 
@@ -77,7 +77,7 @@ Als speler wil ik door de itemcatalogus kunnen bladeren, zodat ik items kan ontd
 - Magische eigenschappen worden getoond
 
 #### Items Zoeken
-Als speler wil ik kunnen zoeken naar specifieke items, zodat ik snel vind wat ik zoek. 👎
+Als speler wil ik kunnen zoeken naar specifieke items, zodat ik snel vind wat ik zoek. 👍
 
 **Acceptatiecriteria:**
 
