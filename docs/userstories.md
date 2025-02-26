@@ -13,7 +13,7 @@
 ### Epic: Gebruikersbeheer
 
 #### Registratie
-Als nieuwe speler wil ik mezelf kunnen registreren, zodat ik toegang krijg tot het spel.
+Als nieuwe speler wil ik mezelf kunnen registreren, zodat ik toegang krijg tot het spel. 👍
 
 **Acceptatiecriteria:**
 
@@ -28,7 +28,7 @@ Als nieuwe speler wil ik mezelf kunnen registreren, zodat ik toegang krijg tot h
 - Gebruiker krijgt bevestiging na succesvolle registratie
 
 #### Authenticatie
-Als geregistreerde gebruiker wil ik kunnen inloggen, zodat ik toegang krijg tot mijn account.
+Als geregistreerde gebruiker wil ik kunnen inloggen, zodat ik toegang krijg tot mijn account. 👍
 
 **Acceptatiecriteria:**
 
@@ -41,14 +41,14 @@ Als geregistreerde gebruiker wil ik kunnen inloggen, zodat ik toegang krijg tot 
 - Sessie wordt veilig beheerd
 
 #### Profiel Bekijken
-Als speler wil ik mijn profielgegevens kunnen bekijken, zodat ik mijn huidige informatie kan controleren.
+Als speler wil ik mijn profielgegevens kunnen bekijken, zodat ik mijn huidige informatie kan controleren. 👍
 
 **Acceptatiecriteria:**
 
 - Gebruiker kan eigen profielgegevens inzien
 
 #### Profiel Aanpassen
-Als speler wil ik mijn profielgegevens kunnen aanpassen, zodat deze up-to-date blijven.
+Als speler wil ik mijn profielgegevens kunnen aanpassen, zodat deze up-to-date blijven. 👍
 
 **Acceptatiecriteria:**
 
@@ -61,7 +61,7 @@ Als speler wil ik mijn profielgegevens kunnen aanpassen, zodat deze up-to-date b
 ### Epic: Itemcatalogus
 
 #### Items Bekijken
-Als speler wil ik door de itemcatalogus kunnen bladeren, zodat ik items kan ontdekken.
+Als speler wil ik door de itemcatalogus kunnen bladeren, zodat ik items kan ontdekken. 👎
 
 **Acceptatiecriteria:**
 
@@ -77,7 +77,7 @@ Als speler wil ik door de itemcatalogus kunnen bladeren, zodat ik items kan ontd
 - Magische eigenschappen worden getoond
 
 #### Items Zoeken
-Als speler wil ik kunnen zoeken naar specifieke items, zodat ik snel vind wat ik zoek.
+Als speler wil ik kunnen zoeken naar specifieke items, zodat ik snel vind wat ik zoek. 👎
 
 **Acceptatiecriteria:**
 
@@ -90,7 +90,7 @@ Als speler wil ik kunnen zoeken naar specifieke items, zodat ik snel vind wat ik
 ### Epic: Inventarisbeheer
 
 #### Inventaris Bekijken
-Als speler wil ik mijn persoonlijke inventaris kunnen bekijken, zodat ik overzicht heb van mijn items.
+Als speler wil ik mijn persoonlijke inventaris kunnen bekijken, zodat ik overzicht heb van mijn items. 👎
 
 **Acceptatiecriteria:**
 
@@ -103,7 +103,7 @@ Als speler wil ik mijn persoonlijke inventaris kunnen bekijken, zodat ik overzic
 ### Epic: Handelssysteem
 
 #### Handelsverzoek Versturen
-Als speler wil ik handelsverzoeken kunnen versturen, zodat ik items kan ruilen met andere spelers.
+Als speler wil ik handelsverzoeken kunnen versturen, zodat ik items kan ruilen met andere spelers. 👎
 
 **Acceptatiecriteria:**
 
@@ -116,7 +116,7 @@ Als speler wil ik handelsverzoeken kunnen versturen, zodat ik items kan ruilen m
 - Ontvangen bevestiging van verzending
 
 #### Handelsverzoek Accepteren
-Als speler wil ik ontvangen handelsverzoeken kunnen accepteren, zodat ik gewenste items kan verkrijgen.
+Als speler wil ik ontvangen handelsverzoeken kunnen accepteren, zodat ik gewenste items kan verkrijgen. 👎
 
 **Acceptatiecriteria:**
 
@@ -131,7 +131,7 @@ Als speler wil ik ontvangen handelsverzoeken kunnen accepteren, zodat ik gewenst
 - Automatische inventaris update na succesvolle handel
 
 #### Handelsverzoek Weigeren
-Als speler wil ik ontvangen handelsverzoeken kunnen weigeren, zodat ik ongewenste trades kan voorkomen.
+Als speler wil ik ontvangen handelsverzoeken kunnen weigeren, zodat ik ongewenste trades kan voorkomen. 👎
 
 **Acceptatiecriteria:**
 
@@ -144,7 +144,7 @@ Als speler wil ik ontvangen handelsverzoeken kunnen weigeren, zodat ik ongewenst
 - Bevestiging van keuze
 
 #### Handelsnotificaties
-Als speler wil ik notificaties ontvangen over handelsgerelateerde activiteiten, zodat ik op de hoogte blijf.
+Als speler wil ik notificaties ontvangen over handelsgerelateerde activiteiten, zodat ik op de hoogte blijf. 👎
 
 **Acceptatiecriteria:**
 
@@ -155,7 +155,7 @@ Als speler wil ik notificaties ontvangen over handelsgerelateerde activiteiten, 
 ### Epic: Beheerderspaneel
 
 #### Gebruikersbeheer (Admin)
-Als beheerder wil ik gebruikers kunnen aanmaken, zodat ik nieuwe accounts kan creëren.
+Als beheerder wil ik gebruikers kunnen aanmaken, zodat ik nieuwe accounts kan creëren. 👎
 
 **Acceptatiecriteria:**
 
@@ -164,7 +164,7 @@ Als beheerder wil ik gebruikers kunnen aanmaken, zodat ik nieuwe accounts kan cr
 - Toewijzen van rollen
 
 #### Item Aanmaken (Admin)
-Als beheerder wil ik nieuwe items kunnen aanmaken, zodat ik de itemcatalogus kan uitbreiden.
+Als beheerder wil ik nieuwe items kunnen aanmaken, zodat ik de itemcatalogus kan uitbreiden. 👎
 
 **Acceptatiecriteria:**
 
@@ -173,7 +173,7 @@ Als beheerder wil ik nieuwe items kunnen aanmaken, zodat ik de itemcatalogus kan
 - Instellen van basisstatistieken
 
 #### Item Bewerken (Admin)
-Als beheerder wil ik bestaande items kunnen bewerken, zodat ik balanswijzigingen kan doorvoeren.
+Als beheerder wil ik bestaande items kunnen bewerken, zodat ik balanswijzigingen kan doorvoeren. 👎
 
 **Acceptatiecriteria:**
 
@@ -182,7 +182,7 @@ Als beheerder wil ik bestaande items kunnen bewerken, zodat ik balanswijzigingen
 - Aanpassen van statistieken
 
 #### Item Verwijderen (Admin)
-Als beheerder wil ik items kunnen verwijderen, zodat ik problematische items uit het spel kan halen.
+Als beheerder wil ik items kunnen verwijderen, zodat ik problematische items uit het spel kan halen. 👎
 
 **Acceptatiecriteria:**
 
@@ -191,14 +191,14 @@ Als beheerder wil ik items kunnen verwijderen, zodat ik problematische items uit
 - Bevestiging voor verwijdering
 
 #### Itemstatistieken Instellen (Admin)
-Als beheerder wil ik itemstatistieken kunnen instellen, zodat ik de gameplay kan balanceren.
+Als beheerder wil ik itemstatistieken kunnen instellen, zodat ik de gameplay kan balanceren. 👎
 
 **Acceptatiecriteria:**
 
 - Statistieken instellen (0-100)
 
 #### Item Toewijzing (Admin)
-Als beheerder wil ik items kunnen toewijzen aan spelers voor bug compensatie of community rewards.
+Als beheerder wil ik items kunnen toewijzen aan spelers voor bug compensatie of community rewards. 👎
 
 **Acceptatiecriteria:**
 
@@ -209,14 +209,14 @@ Als beheerder wil ik items kunnen toewijzen aan spelers voor bug compensatie of 
 - Toevoegen item aan spelerinventaris
 
 #### Economie Overzicht Bekijken (Admin)
-Als beheerder wil ik kunnen zien hoeveel spelers een bepaald type item bezitten, zodat ik de economie kan monitoren.
+Als beheerder wil ik kunnen zien hoeveel spelers een bepaald type item bezitten, zodat ik de economie kan monitoren. 👎
 
 **Acceptatiecriteria:**
 
 - Overzicht van aantal spelers per itemtype
 
 #### Economie Filteren (Admin)
-Als beheerder wil ik de economie-informatie kunnen filteren, zodat ik specifieke aspecten van de game-economie kan analyseren.
+Als beheerder wil ik de economie-informatie kunnen filteren, zodat ik specifieke aspecten van de game-economie kan analyseren. 👎
 
 **Acceptatiecriteria:**
 
