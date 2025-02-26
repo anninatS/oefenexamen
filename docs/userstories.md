@@ -4,10 +4,6 @@
 
 - Code is gecommit naar GitHub repository
 
-- Database queries zijn geoptimaliseerd
-
-- Documentatie is bijgewerkt
-
 - Functionaliteit werkt in development omgeving
 
 - Security maatregelen zijn geïmplementeerd
