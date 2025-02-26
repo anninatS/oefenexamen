@@ -90,7 +90,7 @@ Als speler wil ik kunnen zoeken naar specifieke items, zodat ik snel vind wat ik
 ### Epic: Inventarisbeheer
 
 #### Inventaris Bekijken
-Als speler wil ik mijn persoonlijke inventaris kunnen bekijken, zodat ik overzicht heb van mijn items. 👎
+Als speler wil ik mijn persoonlijke inventaris kunnen bekijken, zodat ik overzicht heb van mijn items. 👍
 
 **Acceptatiecriteria:**
 
