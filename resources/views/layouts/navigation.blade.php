@@ -23,6 +23,18 @@
                     <x-nav-link :href="route('items.index')" :active="request()->routeIs('items.index') || request()->routeIs('items.show')">
                         {{ __('Item Catalog') }}
                     </x-nav-link>
+
+                    <x-nav-link :href="route('trades.index')" :active="request()->routeIs('trades.index') || request()->routeIs('trades.show') || request()->routeIs('trades.create')">
+                        {{ __('Trades') }}
+                    </x-nav-link>
+
+                    <x-nav-link :href="route('notifications.index')" :active="request()->routeIs('notifications.index')" class="relative">
+                        {{ __('Notifications') }}
+                        @php
+                            $unreadCount = Auth::user()->notifications()->where('read', false)->count();
+                        @endphp
+                        <x-notification-badge :count="$unreadCount" />
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -85,6 +97,22 @@
 
             <x-responsive-nav-link :href="route('items.index')" :active="request()->routeIs('items.index') || request()->routeIs('items.show')">
                 {{ __('Item Catalog') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('trades.index')" :active="request()->routeIs('trades.index') || request()->routeIs('trades.show') || request()->routeIs('trades.create')">
+                {{ __('Trades') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('notifications.index')" :active="request()->routeIs('notifications.index')" class="flex justify-between items-center">
+                <span>{{ __('Notifications') }}</span>
+                @php
+                    $unreadCount = Auth::user()->notifications()->where('read', false)->count();
+                @endphp
+                @if($unreadCount > 0)
+                    <span class="inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
+                        {{ $unreadCount > 99 ? '99+' : $unreadCount }}
+                    </span>
+                @endif
             </x-responsive-nav-link>
         </div>
 

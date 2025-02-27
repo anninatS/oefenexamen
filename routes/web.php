@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TradeController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -23,6 +25,16 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index');
     Route::get('/inventory/{inventory}', [InventoryController::class, 'show'])->name('inventory.show');
+
+    Route::get('/trades', [TradeController::class, 'index'])->name('trades.index');
+    Route::get('/trades/create', [TradeController::class, 'create'])->name('trades.create');
+    Route::post('/trades', [TradeController::class, 'store'])->name('trades.store');
+    Route::get('/trades/{trade}', [TradeController::class, 'show'])->name('trades.show');
+    Route::put('/trades/{trade}', [TradeController::class, 'update'])->name('trades.update');
+
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::post('/notifications/{notification}/mark-read', [NotificationController::class, 'markAsRead'])->name('notifications.mark-read');
+    Route::post('/notifications/mark-all-read', [NotificationController::class, 'markAllAsRead'])->name('notifications.mark-all-read');
 });
 
 require __DIR__.'/auth.php';
