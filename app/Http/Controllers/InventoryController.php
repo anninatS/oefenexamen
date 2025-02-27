@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Inventory;
+use App\Models\Item;
+use App\Utility\MaxDurabilityUtility;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 
 class InventoryController extends Controller
@@ -83,8 +86,14 @@ class InventoryController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
+        $durability = MaxDurabilityUtility::getMaxDurability();
+        $maxDurability = $durability['maxDurability'];
+        $durabilityPercentage = $durability['durabilityPercentage'];
+
         return view('inventory.show', [
             'inventory' => $inventory->load('item'),
+            'maxDurability' => $maxDurability,
+            'durabilityPercentage' => $durabilityPercentage,
         ]);
     }
 }

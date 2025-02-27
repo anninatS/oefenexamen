@@ -68,11 +68,12 @@
                                     </div>
                                 </div>
 
-                                <div class="bg-gray-50 p-3 rounded-lg">
+                                <<div class="bg-gray-50 p-3 rounded-lg">
                                     <div class="text-gray-500 text-sm">Durability</div>
                                     <div class="text-2xl font-bold">{{ $inventory->item->durability }}</div>
+                                    <div class="text-xs text-gray-500">Max: {{ $maxDurability }}</div>
                                     <div class="h-2 w-full bg-gray-200 rounded-full mt-1">
-                                        <div class="h-2 bg-green-500 rounded-full" style="width: {{ min(100, $inventory->item->durability) }}%;"></div>
+                                        <div class="h-2 bg-green-500 rounded-full" style="width: {{ $durabilityPercentage }}%;"></div>
                                     </div>
                                 </div>
                             </div>

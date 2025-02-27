@@ -170,20 +170,35 @@ class TradeController extends Controller
 
         $trade->load(['sender', 'receiver', 'tradeItems.inventory.item']);
 
-        // Group trade items by direction
-        $senderItems = $trade->tradeItems->filter(function ($item) {
-            return $item->direction === TradeItem::DIRECTION_OFFER;
-        });
+        // Determine if the current user is the sender
+        $isSender = $trade->sender_id === $user->id;
 
-        $receiverItems = $trade->tradeItems->filter(function ($item) {
-            return $item->direction === TradeItem::DIRECTION_REQUEST;
-        });
+        // Group trade items by the current user's perspective
+        if ($isSender) {
+            // User is the sender
+            $userOfferingItems = $trade->tradeItems->filter(function ($item) {
+                return $item->direction === TradeItem::DIRECTION_OFFER;
+            });
+
+            $userReceivingItems = $trade->tradeItems->filter(function ($item) {
+                return $item->direction === TradeItem::DIRECTION_REQUEST;
+            });
+        } else {
+            // User is the receiver
+            $userOfferingItems = $trade->tradeItems->filter(function ($item) {
+                return $item->direction === TradeItem::DIRECTION_REQUEST;
+            });
+
+            $userReceivingItems = $trade->tradeItems->filter(function ($item) {
+                return $item->direction === TradeItem::DIRECTION_OFFER;
+            });
+        }
 
         return view('trades.show', [
             'tradeRequest' => $trade,
-            'isSender' => $trade->sender_id === $user->id,
-            'senderItems' => $senderItems,
-            'receiverItems' => $receiverItems,
+            'isSender' => $isSender,
+            'senderItems' => $userOfferingItems,  // What the current user is offering
+            'receiverItems' => $userReceivingItems, // What the current user will receive
         ]);
     }
 
@@ -455,146 +470,6 @@ class TradeController extends Controller
 
         return redirect()->route('trades.show', $trade)
             ->with('status', 'Trade request updated successfully.');
-    }
-
-    /**
-     * Remove an item from an existing trade request.
-     */
-    public function removeItem(Request $request, TradeRequest $trade, TradeItem $item): RedirectResponse
-    {
-        $user = $request->user();
-
-        // Check if the user is involved in this trade
-        if ($trade->sender_id !== $user->id && $trade->receiver_id !== $user->id) {
-            abort(403, 'You are not authorized to update this trade request.');
-        }
-
-        // Check if the trade is still pending
-        if (!$trade->isPending()) {
-            return redirect()->route('trades.show', $trade)
-                ->withErrors(['trade' => 'This trade request cannot be updated because it has already been processed.']);
-        }
-
-        // Check if the item belongs to this trade
-        if ($item->trade_request_id !== $trade->id) {
-            abort(404, 'The specified item does not belong to this trade request.');
-        }
-
-        // Check if the user can remove this item
-        $isSender = $trade->sender_id === $user->id;
-        if (($isSender && $item->direction !== TradeItem::DIRECTION_OFFER) ||
-            (!$isSender && $item->direction !== TradeItem::DIRECTION_REQUEST)) {
-            abort(403, 'You can only remove your own items from the trade.');
-        }
-
-        // Remove the item
-        $item->delete();
-
-        // Check if there are any items left in the trade
-        $remainingItems = $trade->tradeItems()->count();
-        if ($remainingItems === 0) {
-            // If no items left, cancel the trade
-            $trade->status = TradeRequest::STATUS_REJECTED;
-            $trade->save();
-
-            // Notify the other party
-            $targetUserId = $isSender ? $trade->receiver_id : $trade->sender_id;
-            Notification::create([
-                'user_id' => $targetUserId,
-                'type' => Notification::TYPE_TRADE_REJECTED,
-                'message' => "{$user->name} has cancelled the trade request by removing all items",
-                'read' => false,
-            ]);
-
-            return redirect()->route('trades.index')
-                ->with('status', 'Trade request cancelled because all items were removed.');
-        }
-
-        // Notify the other party about the update
-        $targetUserId = $isSender ? $trade->receiver_id : $trade->sender_id;
-        Notification::create([
-            'user_id' => $targetUserId,
-            'type' => Notification::TYPE_TRADE_UPDATED,
-            'message' => "{$user->name} has removed an item from the trade request",
-            'read' => false,
-        ]);
-
-        return redirect()->route('trades.show', $trade)
-            ->with('status', 'Item removed from trade successfully.');
-    }
-
-    /**
-     * Add items to an existing trade request.
-     */
-    public function addItems(Request $request, TradeRequest $trade): RedirectResponse
-    {
-        $user = $request->user();
-
-        // Check if the user is involved in this trade
-        if ($trade->sender_id !== $user->id && $trade->receiver_id !== $user->id) {
-            abort(403, 'You are not authorized to update this trade request.');
-        }
-
-        // Check if the trade is still active (pending or modified)
-        if (!$trade->isActive()) {
-            return redirect()->route('trades.show', $trade)
-                ->withErrors(['trade' => 'This trade request cannot be updated because it has already been finalized.']);
-        }
-
-        $request->validate([
-            'inventory_items' => ['required', 'array', 'min:1'],
-            'inventory_items.*' => ['exists:inventories,id'],
-        ]);
-
-        $isSender = $trade->sender_id === $user->id;
-        $direction = $isSender ? TradeItem::DIRECTION_OFFER : TradeItem::DIRECTION_REQUEST;
-
-        // Verify the selected items belong to the user
-        $itemCount = Inventory::where('user_id', $user->id)
-            ->whereIn('id', $request->inventory_items)
-            ->count();
-
-        if ($itemCount !== count($request->inventory_items)) {
-            return back()->withErrors(['inventory_items' => 'Some of the selected items do not belong to you.'])->withInput();
-        }
-
-        // Check if any of the selected items are already in pending trade requests
-        $pendingTradeItems = TradeItem::whereIn('inventory_id', $request->inventory_items)
-            ->whereHas('tradeRequest', function($query) use ($trade) {
-                $query->whereIn('status', [TradeRequest::STATUS_PENDING, TradeRequest::STATUS_MODIFIED])
-                    ->where('id', '!=', $trade->id);
-            })
-            ->count();
-
-        if ($pendingTradeItems > 0) {
-            return back()->withErrors(['inventory_items' => 'One or more selected items are already part of other pending trade requests. Please finalize or cancel those trades first.'])->withInput();
-        }
-
-        // Add the new items to the trade request
-        foreach ($request->inventory_items as $inventoryItemId) {
-            TradeItem::create([
-                'trade_request_id' => $trade->id,
-                'inventory_id' => $inventoryItemId,
-                'direction' => $direction,
-            ]);
-        }
-
-        // Mark trade as modified and record who modified it
-        $trade->status = TradeRequest::STATUS_MODIFIED;
-        $trade->modified_by_id = $user->id;
-        $trade->save();
-
-        // Create a notification for the other party
-        $targetUserId = $isSender ? $trade->receiver_id : $trade->sender_id;
-        Notification::create([
-            'user_id' => $targetUserId,
-            'type' => Notification::TYPE_TRADE_UPDATED,
-            'message' => "{$user->name} has updated the trade request with additional items. Please review and approve the changes.",
-            'read' => false,
-        ]);
-
-        return redirect()->route('trades.show', $trade)
-            ->with('status', 'Trade request updated successfully. The other party must approve the changes.');
     }
 
     /**

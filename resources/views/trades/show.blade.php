@@ -29,80 +29,79 @@
             @endif
 
             <!-- Trade Status Banner -->
-                <!-- Trade Status Banner -->
-                <div class="mb-6 p-4 rounded-lg
-    {{ $tradeRequest->isPending() ? 'bg-yellow-100 text-yellow-800' :
-       ($tradeRequest->isModified() ? 'bg-blue-100 text-blue-800' :
-       ($tradeRequest->isAccepted() ? 'bg-green-100 text-green-800' :
-       'bg-red-100 text-red-800')) }}">
-                    <div class="flex items-center justify-between">
-                        <div>
-                            <h3 class="text-lg font-medium">
-                                @if($tradeRequest->isPending())
-                                    Trade Request Pending
-                                @elseif($tradeRequest->isModified())
-                                    Trade Request Modified
-                                @elseif($tradeRequest->isAccepted())
-                                    Trade Request Accepted
-                                @else
-                                    Trade Request Rejected
-                                @endif
-                            </h3>
-                            <p class="text-sm mt-1">
-                                {{ $isSender ? 'You' : $tradeRequest->sender->name }} sent a trade request to {{ $isSender ? $tradeRequest->receiver->name : 'you' }} on {{ $tradeRequest->created_at->format('M j, Y \a\t H:i') }}.
+            <div class="mb-6 p-4 rounded-lg
+                {{ $tradeRequest->isPending() ? 'bg-yellow-100 text-yellow-800' :
+                   ($tradeRequest->isModified() ? 'bg-blue-100 text-blue-800' :
+                   ($tradeRequest->isAccepted() ? 'bg-green-100 text-green-800' :
+                   'bg-red-100 text-red-800')) }}">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h3 class="text-lg font-medium">
+                            @if($tradeRequest->isPending())
+                                Trade Request Pending
+                            @elseif($tradeRequest->isModified())
+                                Trade Request Modified
+                            @elseif($tradeRequest->isAccepted())
+                                Trade Request Accepted
+                            @else
+                                Trade Request Rejected
+                            @endif
+                        </h3>
+                        <p class="text-sm mt-1">
+                            {{ $isSender ? 'You' : $tradeRequest->sender->name }} sent a trade request to {{ $isSender ? $tradeRequest->receiver->name : 'you' }} on {{ $tradeRequest->created_at->format('M j, Y \a\t H:i') }}.
 
-                                @if($tradeRequest->isModified())
-                                    <br>
-                                    <strong>
-                                        {{ $tradeRequest->modifiedBy->id === Auth::id() ? 'You' : $tradeRequest->modifiedBy->name }}
-                                        last modified this trade on {{ $tradeRequest->updated_at->format('M j, Y \a\t H:i') }}.
-                                    </strong>
-                                @endif
-                            </p>
-                        </div>
+                            @if($tradeRequest->isModified())
+                                <br>
+                                <strong>
+                                    {{ $tradeRequest->modifiedBy->id === Auth::id() ? 'You' : $tradeRequest->modifiedBy->name }}
+                                    last modified this trade on {{ $tradeRequest->updated_at->format('M j, Y \a\t H:i') }}.
+                                </strong>
+                            @endif
+                        </p>
+                    </div>
 
-                        @if($tradeRequest->isActive())
-                            @if($tradeRequest->canBeApprovedBy(Auth::user()))
-                                <div class="flex space-x-2">
-                                    <form method="POST" action="{{ route('trades.update', $tradeRequest) }}">
-                                        @csrf
-                                        @method('PUT')
-                                        <input type="hidden" name="action" value="accept">
-                                        <button type="submit" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md" onclick="return confirm('Are you sure you want to accept this trade request?')">
-                                            Accept
-                                        </button>
-                                    </form>
-
-                                    <form method="POST" action="{{ route('trades.update', $tradeRequest) }}">
-                                        @csrf
-                                        @method('PUT')
-                                        <input type="hidden" name="action" value="reject">
-                                        <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md" onclick="return confirm('Are you sure you want to reject this trade request?')">
-                                            Reject
-                                        </button>
-                                    </form>
-                                </div>
-                            @elseif($tradeRequest->isPending() && $isSender)
-                                <!-- Cancel button for sender -->
+                    @if($tradeRequest->isActive())
+                        @if($tradeRequest->canBeApprovedBy(Auth::user()))
+                            <div class="flex space-x-2">
                                 <form method="POST" action="{{ route('trades.update', $tradeRequest) }}">
                                     @csrf
                                     @method('PUT')
-                                    <input type="hidden" name="action" value="cancel">
-                                    <button type="submit" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md" onclick="return confirm('Are you sure you want to cancel this trade request?')">
-                                        Cancel Trade
+                                    <input type="hidden" name="action" value="accept">
+                                    <button type="submit" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-md" onclick="return confirm('Are you sure you want to accept this trade request?')">
+                                        Accept
                                     </button>
                                 </form>
-                            @elseif($tradeRequest->isModified() && $tradeRequest->modified_by_id === Auth::id())
-                                <div class="flex items-center px-4 py-2 bg-blue-500 text-white rounded-md">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
-                                    </svg>
-                                    Waiting for other party's approval
-                                </div>
-                            @endif
+
+                                <form method="POST" action="{{ route('trades.update', $tradeRequest) }}">
+                                    @csrf
+                                    @method('PUT')
+                                    <input type="hidden" name="action" value="reject">
+                                    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md" onclick="return confirm('Are you sure you want to reject this trade request?')">
+                                        Reject
+                                    </button>
+                                </form>
+                            </div>
+                        @elseif($tradeRequest->isPending() && $isSender)
+                            <!-- Cancel button for sender -->
+                            <form method="POST" action="{{ route('trades.update', $tradeRequest) }}">
+                                @csrf
+                                @method('PUT')
+                                <input type="hidden" name="action" value="cancel">
+                                <button type="submit" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md" onclick="return confirm('Are you sure you want to cancel this trade request?')">
+                                    Cancel Trade
+                                </button>
+                            </form>
+                        @elseif($tradeRequest->isModified() && $tradeRequest->modified_by_id === Auth::id())
+                            <div class="flex items-center px-4 py-2 bg-blue-500 text-white rounded-md">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                                </svg>
+                                Waiting for other party's approval
+                            </div>
                         @endif
-                    </div>
+                    @endif
                 </div>
+            </div>
 
             <!-- Trade Items -->
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -110,25 +109,25 @@
                     <h3 class="text-lg font-medium mb-4">{{ __('Items in this Trade') }}</h3>
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                        <!-- Sender's Items -->
+                        <!-- User's Offering Items -->
                         <div>
                             @include('trades._trade_items', [
                                 'title' => 'You are offering:',
                                 'items' => $senderItems,
                                 'trade' => $tradeRequest,
-                                'canEdit' => $tradeRequest->isPending() && $isSender,
-                                'canAdd' => $tradeRequest->isPending() && $isSender
+                                'canEdit' => $tradeRequest->isPending() || ($tradeRequest->isModified() && $tradeRequest->modified_by_id !== Auth::id()),
+                                'canAdd' => $tradeRequest->isPending() || ($tradeRequest->isModified() && $tradeRequest->modified_by_id !== Auth::id())
                             ])
                         </div>
 
-                        <!-- Receiver's Items -->
+                        <!-- User's Receiving Items -->
                         <div>
                             @include('trades._trade_items', [
                                 'title' => 'You will receive:',
                                 'items' => $receiverItems,
                                 'trade' => $tradeRequest,
-                                'canEdit' => $tradeRequest->isPending() && !$isSender,
-                                'canAdd' => $tradeRequest->isPending() && !$isSender
+                                'canEdit' => false,
+                                'canAdd' => false
                             ])
                         </div>
                     </div>
