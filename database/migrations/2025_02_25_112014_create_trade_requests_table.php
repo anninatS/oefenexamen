@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\TradeRequest;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,7 +16,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('sender_id')->index();
             $table->foreignId('receiver_id')->index();
-            $table->enum('status', ['pending', 'accepted', 'rejected'])->default('pending');
+            $table->enum('status', [TradeRequest::STATUS_PENDING, TradeRequest::STATUS_ACCEPTED, TradeRequest::STATUS_REJECTED])
+                ->default(TradeRequest::STATUS_PENDING);
             $table->timestamps();
 
             $table->foreign('sender_id')->references('id')->on('users')->onDelete('cascade');

@@ -45,6 +45,13 @@
                                         <td class="py-3 px-4 text-sm">
                                             @if($tradeRequest->isPending())
                                                 <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-1 rounded">Pending</span>
+                                            @elseif($tradeRequest->isModified())
+                                                <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded">
+                                                    Modified
+                                                    @if($tradeRequest->modified_by_id === Auth::id())
+                                                        (by you)
+                                                    @endif
+                                                </span>
                                             @elseif($tradeRequest->isAccepted())
                                                 <span class="bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded">Accepted</span>
                                             @elseif($tradeRequest->isRejected())
@@ -55,7 +62,7 @@
                                         <td class="py-3 px-4 text-right">
                                             <a href="{{ route('trades.show', $tradeRequest) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">View</a>
 
-                                            @if($tradeRequest->isPending())
+                                            @if($tradeRequest->isActive() && $tradeRequest->canBeApprovedBy(Auth::user()))
                                                 <form method="POST" action="{{ route('trades.update', $tradeRequest) }}" class="inline">
                                                     @csrf
                                                     @method('PUT')
@@ -113,6 +120,13 @@
                                         <td class="py-3 px-4 text-sm">
                                             @if($tradeRequest->isPending())
                                                 <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-1 rounded">Pending</span>
+                                            @elseif($tradeRequest->isModified())
+                                                <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded">
+                                                    Modified
+                                                    @if($tradeRequest->modified_by_id === Auth::id())
+                                                        (by you)
+                                                    @endif
+                                                </span>
                                             @elseif($tradeRequest->isAccepted())
                                                 <span class="bg-green-100 text-green-800 text-xs font-medium px-2 py-1 rounded">Accepted</span>
                                             @elseif($tradeRequest->isRejected())
@@ -123,13 +137,29 @@
                                         <td class="py-3 px-4 text-right">
                                             <a href="{{ route('trades.show', $tradeRequest) }}" class="text-indigo-600 hover:text-indigo-900">View</a>
 
-                                            @if($tradeRequest->isPending())
-                                                <form method="POST" action="{{ route('trades.update', $tradeRequest) }}" class="inline ml-3">
-                                                    @csrf
-                                                    @method('PUT')
-                                                    <input type="hidden" name="action" value="cancel">
-                                                    <button type="submit" class="text-gray-600 hover:text-gray-900" onclick="return confirm('Are you sure you want to cancel this trade request?')">Cancel</button>
-                                                </form>
+                                            @if($tradeRequest->isActive())
+                                                @if($tradeRequest->isPending() && $tradeRequest->sender_id === Auth::id())
+                                                    <form method="POST" action="{{ route('trades.update', $tradeRequest) }}" class="inline ml-3">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <input type="hidden" name="action" value="cancel">
+                                                        <button type="submit" class="text-gray-600 hover:text-gray-900" onclick="return confirm('Are you sure you want to cancel this trade request?')">Cancel</button>
+                                                    </form>
+                                                @elseif($tradeRequest->isModified() && $tradeRequest->canBeApprovedBy(Auth::user()))
+                                                    <form method="POST" action="{{ route('trades.update', $tradeRequest) }}" class="inline ml-3">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <input type="hidden" name="action" value="accept">
+                                                        <button type="submit" class="text-green-600 hover:text-green-900 mr-3" onclick="return confirm('Are you sure you want to accept the modified trade request?')">Accept</button>
+                                                    </form>
+
+                                                    <form method="POST" action="{{ route('trades.update', $tradeRequest) }}" class="inline">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <input type="hidden" name="action" value="reject">
+                                                        <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Are you sure you want to reject the modified trade request?')">Reject</button>
+                                                    </form>
+                                                @endif
                                             @endif
                                         </td>
                                     </tr>

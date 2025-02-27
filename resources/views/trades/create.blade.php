@@ -14,7 +14,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <form method="POST" action="{{ route('trades.store') }}">
+                    <form method="POST" action="{{ route('trades.store') }}" id="trade-form">
                         @csrf
 
                         <!-- Errors -->
@@ -46,38 +46,51 @@
                             @endif
                         </div>
 
-                        <!-- Select Items for Trade -->
-                        <div class="mb-6">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Select Items to Trade</label>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                            <!-- Your Items (Sender) -->
+                            <div class="border rounded-lg p-4">
+                                <h3 class="text-lg font-medium mb-4">Your Items to Offer</h3>
 
-                            @if($inventoryItems->count() > 0)
-                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                    @foreach($inventoryItems as $inventoryItem)
-                                        <div class="border rounded-lg p-4 flex items-start space-x-3">
-                                            <input type="checkbox" id="item_{{ $inventoryItem->id }}" name="inventory_items[]" value="{{ $inventoryItem->id }}" class="mt-1 h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" {{ in_array($inventoryItem->id, old('inventory_items', [])) ? 'checked' : '' }}>
+                                @if($senderItems->count() > 0)
+                                    <div class="max-h-96 overflow-y-auto p-2">
+                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            @foreach($senderItems as $inventoryItem)
+                                                <div class="border rounded-lg p-4 flex items-start space-x-3">
+                                                    <input type="checkbox" id="sender_item_{{ $inventoryItem->id }}" name="sender_items[]" value="{{ $inventoryItem->id }}" class="mt-1 h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded" {{ in_array($inventoryItem->id, old('sender_items', [])) ? 'checked' : '' }}>
 
-                                            <div>
-                                                <label for="item_{{ $inventoryItem->id }}" class="font-medium text-gray-800">{{ $inventoryItem->item->name }}</label>
-                                                <div class="flex items-center mt-1">
-                                                    <x-rarity-badge :rarity="$inventoryItem->item->rarity" />
-                                                    <span class="ml-2 text-sm text-gray-600">{{ ucfirst($inventoryItem->item->type) }}</span>
+                                                    <div>
+                                                        <label for="sender_item_{{ $inventoryItem->id }}" class="font-medium text-gray-800">{{ $inventoryItem->item->name }}</label>
+                                                        <div class="flex items-center mt-1">
+                                                            <x-rarity-badge :rarity="$inventoryItem->item->rarity" />
+                                                            <span class="ml-2 text-sm text-gray-600">{{ ucfirst($inventoryItem->item->type) }}</span>
+                                                        </div>
+                                                        <div class="grid grid-cols-3 gap-2 mt-2 text-xs text-gray-600">
+                                                            <div>STR: {{ $inventoryItem->item->strength }}</div>
+                                                            <div>SPD: {{ $inventoryItem->item->speed }}</div>
+                                                            <div>DUR: {{ $inventoryItem->item->durability }}</div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="grid grid-cols-3 gap-2 mt-2 text-xs text-gray-600">
-                                                    <div>STR: {{ $inventoryItem->item->strength }}</div>
-                                                    <div>SPD: {{ $inventoryItem->item->speed }}</div>
-                                                    <div>DUR: {{ $inventoryItem->item->durability }}</div>
-                                                </div>
-                                            </div>
+                                            @endforeach
                                         </div>
-                                    @endforeach
+                                    </div>
+                                @else
+                                    <p class="text-red-500">You don't have any items in your inventory to trade.</p>
+                                @endif
+                            </div>
+
+                            <!-- Trade Partner's Items (Receiver) -->
+                            <div class="border rounded-lg p-4">
+                                <h3 class="text-lg font-medium mb-4">Items You Want in Return</h3>
+
+                                <div id="receiver-items-container">
+                                    <p class="text-gray-500">Please select a trade partner first to see their available items.</p>
                                 </div>
-                            @else
-                                <p class="text-red-500">You don't have any items in your inventory to trade.</p>
-                            @endif
+                            </div>
                         </div>
 
                         <div class="flex justify-end">
-                            <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors" {{ ($potentialReceivers->count() === 0 || $inventoryItems->count() === 0) ? 'disabled' : '' }}>
+                            <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors" {{ ($potentialReceivers->count() === 0 || $senderItems->count() === 0) ? 'disabled' : '' }}>
                                 {{ __('Send Trade Request') }}
                             </button>
                         </div>
@@ -86,4 +99,38 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const receiverSelect = document.getElementById('receiver_id');
+            const receiverItemsContainer = document.getElementById('receiver-items-container');
+
+            receiverSelect.addEventListener('change', function() {
+                const receiverId = this.value;
+
+                if (receiverId) {
+                    // Show loading indicator
+                    receiverItemsContainer.innerHTML = '<p class="text-gray-500">Loading items...</p>';
+
+                    // Fetch the receiver's items
+                    fetch(`/user-items?user_id=${receiverId}`)
+                        .then(response => response.text())
+                        .then(html => {
+                            receiverItemsContainer.innerHTML = html;
+                        })
+                        .catch(error => {
+                            console.error('Error fetching receiver items:', error);
+                            receiverItemsContainer.innerHTML = '<p class="text-red-500">Error loading items. Please try again.</p>';
+                        });
+                } else {
+                    receiverItemsContainer.innerHTML = '<p class="text-gray-500">Please select a trade partner first to see their available items.</p>';
+                }
+            });
+
+            // If a receiver is already selected (e.g., on form validation error), load their items
+            if (receiverSelect.value) {
+                receiverSelect.dispatchEvent(new Event('change'));
+            }
+        });
+    </script>
 </x-app-layout>

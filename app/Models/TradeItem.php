@@ -10,6 +10,9 @@ class TradeItem extends Model
 {
     use HasFactory;
 
+    const DIRECTION_OFFER = 'offer';
+    const DIRECTION_REQUEST = 'request';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -18,6 +21,7 @@ class TradeItem extends Model
     protected $fillable = [
         'trade_request_id',
         'inventory_id',
+        'direction',
     ];
 
     /**
@@ -34,5 +38,21 @@ class TradeItem extends Model
     public function inventory(): BelongsTo
     {
         return $this->belongsTo(Inventory::class);
+    }
+
+    /**
+     * Check if this is an item offered by the sender.
+     */
+    public function isOffer(): bool
+    {
+        return $this->direction === self::DIRECTION_OFFER;
+    }
+
+    /**
+     * Check if this is an item requested by the receiver.
+     */
+    public function isRequest(): bool
+    {
+        return $this->direction === self::DIRECTION_REQUEST;
     }
 }

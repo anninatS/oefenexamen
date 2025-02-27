@@ -15,6 +15,7 @@ class TradeRequest extends Model
      * The possible statuses for a trade request.
      */
     const STATUS_PENDING = 'pending';
+    const STATUS_MODIFIED = 'modified';
     const STATUS_ACCEPTED = 'accepted';
     const STATUS_REJECTED = 'rejected';
 
@@ -27,6 +28,7 @@ class TradeRequest extends Model
         'sender_id',
         'receiver_id',
         'status',
+        'modified_by_id',
     ];
 
     /**
@@ -46,6 +48,14 @@ class TradeRequest extends Model
     }
 
     /**
+     * Get the user who last modified the trade.
+     */
+    public function modifiedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'modified_by_id');
+    }
+
+    /**
      * Get the items included in this trade request.
      */
     public function tradeItems(): HasMany
@@ -62,6 +72,14 @@ class TradeRequest extends Model
     }
 
     /**
+     * Check if the trade request is modified and waiting approval.
+     */
+    public function isModified(): bool
+    {
+        return $this->status === self::STATUS_MODIFIED;
+    }
+
+    /**
      * Check if the trade request is accepted.
      */
     public function isAccepted(): bool
@@ -75,5 +93,31 @@ class TradeRequest extends Model
     public function isRejected(): bool
     {
         return $this->status === self::STATUS_REJECTED;
+    }
+
+    /**
+     * Check if the trade request is active (pending or modified).
+     */
+    public function isActive(): bool
+    {
+        return $this->isPending() || $this->isModified();
+    }
+
+    /**
+     * Determine if the specified user can approve this trade.
+     */
+    public function canBeApprovedBy(User $user): bool
+    {
+        // If the trade is pending, only the receiver can approve
+        if ($this->isPending()) {
+            return $this->receiver_id === $user->id;
+        }
+
+        // If the trade was modified, the user who didn't modify it can approve
+        if ($this->isModified()) {
+            return $this->modified_by_id !== $user->id;
+        }
+
+        return false;
     }
 }

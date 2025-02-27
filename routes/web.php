@@ -31,6 +31,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/trades', [TradeController::class, 'store'])->name('trades.store');
     Route::get('/trades/{trade}', [TradeController::class, 'show'])->name('trades.show');
     Route::put('/trades/{trade}', [TradeController::class, 'update'])->name('trades.update');
+    Route::get('/trades/{trade}/edit', [TradeController::class, 'edit'])->name('trades.edit');
+    Route::post('/trades/{trade}/items', [TradeController::class, 'addItems'])->name('trades.add-items');
+    Route::delete('/trades/{trade}/items/{item}', [TradeController::class, 'removeItem'])->name('trades.remove-item');
+    Route::get('/user-items', [TradeController::class, 'getUserItems'])->name('trades.user-items');
 
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
     Route::post('/notifications/{notification}/mark-read', [NotificationController::class, 'markAsRead'])->name('notifications.mark-read');

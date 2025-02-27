@@ -16,6 +16,7 @@ class Notification extends Model
     const TYPE_TRADE_REQUEST = 'trade_request';
     const TYPE_TRADE_ACCEPTED = 'trade_accepted';
     const TYPE_TRADE_REJECTED = 'trade_rejected';
+    const TYPE_TRADE_UPDATED = 'trade_updated';
     const TYPE_ITEM_RECEIVED = 'item_received';
     const TYPE_SYSTEM = 'system';
 
