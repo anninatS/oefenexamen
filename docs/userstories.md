@@ -103,7 +103,7 @@ Als speler wil ik mijn persoonlijke inventaris kunnen bekijken, zodat ik overzic
 ### Epic: Handelssysteem
 
 #### Handelsverzoek Versturen
-Als speler wil ik handelsverzoeken kunnen versturen, zodat ik items kan ruilen met andere spelers. 👎
+Als speler wil ik handelsverzoeken kunnen versturen, zodat ik items kan ruilen met andere spelers. 👍
 
 **Acceptatiecriteria:**
 
@@ -113,10 +113,8 @@ Als speler wil ik handelsverzoeken kunnen versturen, zodat ik items kan ruilen m
 
 - Versturen van handelsverzoek
 
-- Ontvangen bevestiging van verzending
-
 #### Handelsverzoek Accepteren
-Als speler wil ik ontvangen handelsverzoeken kunnen accepteren, zodat ik gewenste items kan verkrijgen. 👎
+Als speler wil ik ontvangen handelsverzoeken kunnen accepteren, zodat ik gewenste items kan verkrijgen. 👍
 
 **Acceptatiecriteria:**
 
@@ -131,7 +129,7 @@ Als speler wil ik ontvangen handelsverzoeken kunnen accepteren, zodat ik gewenst
 - Automatische inventaris update na succesvolle handel
 
 #### Handelsverzoek Weigeren
-Als speler wil ik ontvangen handelsverzoeken kunnen weigeren, zodat ik ongewenste trades kan voorkomen. 👎
+Als speler wil ik ontvangen handelsverzoeken kunnen weigeren, zodat ik ongewenste trades kan voorkomen. 👍
 
 **Acceptatiecriteria:**
 
@@ -144,7 +142,7 @@ Als speler wil ik ontvangen handelsverzoeken kunnen weigeren, zodat ik ongewenst
 - Bevestiging van keuze
 
 #### Handelsnotificaties
-Als speler wil ik notificaties ontvangen over handelsgerelateerde activiteiten, zodat ik op de hoogte blijf. 👎
+Als speler wil ik notificaties ontvangen over handelsgerelateerde activiteiten, zodat ik op de hoogte blijf. 👍
 
 **Acceptatiecriteria:**
 
