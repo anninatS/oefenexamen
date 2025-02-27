@@ -20,6 +20,15 @@ class Notification extends Model
     const TYPE_ITEM_RECEIVED = 'item_received';
     const TYPE_SYSTEM = 'system';
 
+    const TYPES = [
+        self::TYPE_TRADE_REQUEST,
+        self::TYPE_TRADE_ACCEPTED,
+        self::TYPE_TRADE_REJECTED,
+        self::TYPE_TRADE_UPDATED,
+        self::TYPE_ITEM_RECEIVED,
+        self::TYPE_SYSTEM
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
