@@ -14,7 +14,6 @@ return new class extends Migration
     {
         Schema::table('trade_items', function (Blueprint $table) {
             $table->enum('direction', [TradeItem::DIRECTION_OFFER, TradeItem::DIRECTION_REQUEST])
-                ->comment('offer = from sender, request = from receiver')
                 ->default(TradeItem::DIRECTION_OFFER)
                 ->after('inventory_id');
         });
